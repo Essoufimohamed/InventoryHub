@@ -3,6 +3,7 @@ import userImg from "../assets/icons/user.png";
 import DashboardHome from "../pages/DashboardHome";
 import { Route, Routes } from "react-router-dom";
 import DashboardProducts from "../pages/DashboardProducts";
+import DashboardStock from "../pages/DashboardStock";
 
 export default function layout() {
     return (
@@ -33,6 +34,7 @@ export default function layout() {
                                 path="/products"
                                 element={<DashboardProducts />}
                             />
+                            <Route path="/stock" element={<DashboardStock />} />
                         </Routes>
                     </div>
                 </main>
