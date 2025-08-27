@@ -6,6 +6,7 @@ import DashboardProducts from "../pages/DashboardProducts";
 import DashboardStock from "../pages/DashboardStock";
 import DashboardCategory from "../pages/DashboardCategory";
 import DashboardSuppliers from "../pages/DashboardSuppliers";
+import DashboardStuff from "../pages/DashboardStaff";
 
 export default function layout() {
     return (
@@ -45,6 +46,7 @@ export default function layout() {
                                 path="/suppliers"
                                 element={<DashboardSuppliers />}
                             />
+                            <Route path="/staff" element={<DashboardStuff />} />
                         </Routes>
                     </div>
                 </main>

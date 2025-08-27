@@ -37,9 +37,9 @@ export const Asidebar = () => {
             link: "/suppliers",
         },
         {
-            title: "Users",
+            title: "Staff",
             icon: users,
-            link: "/users",
+            link: "/staff",
         },
     ];
 

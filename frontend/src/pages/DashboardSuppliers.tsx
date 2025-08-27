@@ -67,7 +67,9 @@ export default function DashboardSuppliers() {
                 <div className="flex justify-end">
                     <button
                         onClick={() => setOpen(true)}
-                        className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-[#71CEED] to-[#408F98] hover:from-[#408F98] hover:to-[#71CEED] text-black font-medium shadow-sm transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+                        className="flex items-center gap-2 px-4 py-2 text-[#ffffdd] rounded-xl font-semibold  bg-gradient-to-tr from-blue-500 to-teal-500 
+                  transition-all duration-300 ease-in-out 
+                  hover:from-teal-500 hover:to-blue-500 hover:scale-105 hover:shadow-lg "
                     >
                         <Plus size={18} />
                         Add Supplier
