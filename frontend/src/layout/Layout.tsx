@@ -4,6 +4,7 @@ import DashboardHome from "../pages/DashboardHome";
 import { Route, Routes } from "react-router-dom";
 import DashboardProducts from "../pages/DashboardProducts";
 import DashboardStock from "../pages/DashboardStock";
+import DashboardCategory from "../pages/DashboardCategory";
 
 export default function layout() {
     return (
@@ -35,6 +36,10 @@ export default function layout() {
                                 element={<DashboardProducts />}
                             />
                             <Route path="/stock" element={<DashboardStock />} />
+                            <Route
+                                path="/categories"
+                                element={<DashboardCategory />}
+                            />
                         </Routes>
                     </div>
                 </main>
