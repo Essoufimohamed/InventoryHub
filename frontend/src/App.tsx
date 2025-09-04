@@ -1,7 +1,18 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./layout/Layout.js";
+import LoginForm from "./components/LoginForm.js";
+import RegisterForm from "./components/RegisterForm.js";
 function App() {
-    return <Layout />;
+    return (
+        <>
+            <Routes>
+                <Route path="/*" element={<Layout />} />
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
+            </Routes>
+        </>
+    );
 }
 
 export default App;
