@@ -82,7 +82,7 @@ export default function layout() {
                                     className="absolute right-4 top-16 bg-white shadow-lg rounded-xl w-52 py-2 px-3 z-50"
                                 >
                                     <ul className="flex flex-col">
-                                        <Link to={"profil"}>
+                                        <Link to={"/profil"}>
                                             <li className="px-3 py-2 flex items-center gap-2 hover:bg-gray-100 rounded-lg cursor-pointer">
                                                 <User size={18} /> Profile{" "}
                                             </li>
