@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/product", productRoutes);
 
 app.get("/", (req, res) => {
     res.send("Inventory Management API running...");

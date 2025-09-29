@@ -12,7 +12,12 @@ export const registerUser = async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = await User.create({ name, email, hashedPassword, role });
+        const user = await User.create({
+            name,
+            email,
+            password: hashedPassword,
+            role,
+        });
 
         res.status(201).json(user);
     } catch (error) {
@@ -27,7 +32,7 @@ export const loginUser = async (req, res) => {
         if (!user) return res.status(400).json({ msg: "Invalid credentials" });
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch)
+        if (!isPasswordMatch)
             return res.status(400).json({ msg: "Invalid credentials" });
 
         const token = generateToken(user._id);
