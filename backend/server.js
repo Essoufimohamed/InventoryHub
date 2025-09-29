@@ -8,6 +8,7 @@ import productRoutes from "./routes/productRoutes.js";
 import salesRoutes from "./routes/saleRoutes.js";
 import stockLogRoutes from "./routes/stockLogRoutes.js";
 import supplierRoutes from "./routes/stockLogRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -21,6 +22,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/sales", salesRoutes);
 app.use("/api/stock", stockLogRoutes);
 app.use("/api/supplier", supplierRoutes);
+app.use("/api/categories", categoryRoutes);
 
 app.get("/", (req, res) => {
     res.send("Inventory Management API running... ");
