@@ -4,8 +4,8 @@ import {
     deleteCategory,
     getCategories,
     updateCategory,
-} from "../controllers/categoryController";
-import { authMiddleware } from "../middlewares/authMiddleware";
+} from "../controllers/categoryController.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 

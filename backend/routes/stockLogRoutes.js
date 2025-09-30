@@ -3,8 +3,8 @@ import {
     addStock,
     getStockLogs,
     removeStock,
-} from "../controllers/stockLogController";
-import { authMiddleware } from "../middlewares/authMiddleware";
+} from "../controllers/stockLogController.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 

@@ -35,8 +35,13 @@ export const loginUser = async (req, res) => {
         if (!isPasswordMatch)
             return res.status(400).json({ msg: "Invalid credentials" });
 
-        const token = generateToken(user._id);
-        res.json({ token, user });
+        const token = generateToken({
+            id: user._id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+        });
+        res.json({ token });
     } catch (err) {
         res.status(500).json({ msg: err.message });
     }
