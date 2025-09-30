@@ -2,6 +2,8 @@ import { UserRound, Lock, Mail } from "lucide-react";
 import logo from "../assets/logo (2).jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import api from "../utils/api";
+import toast from "react-hot-toast";
 
 export default function RegisterForm() {
     const [registerData, setRegisterData] = useState({
@@ -10,15 +12,35 @@ export default function RegisterForm() {
         password: "",
         confirmPassword: "",
     });
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
     function handlSubmitForm(e) {
         e.preventDefault();
-        if (registerData.password === registerData.confirmPassword) {
-            console.log("submit form", registerData);
-            navigate("/login");
-        } else {
-            alert("password wrong");
+
+        setLoading(true);
+
+        if (registerData.password !== registerData.confirmPassword) {
+            toast.error("Passwords do not match");
+            setLoading(false);
+            return;
         }
+        api.post("/auth/register", {
+            name: registerData.name,
+            email: registerData.email,
+            password: registerData.password,
+        })
+            .then((res) => {
+                toast.success("Account created successfully!");
+
+                navigate("/login");
+            })
+            .catch((err) => {
+                toast.error(
+                    err.response?.data?.message || "Registration failed"
+                );
+                setLoading(false);
+            });
     }
     return (
         <>
@@ -56,7 +78,7 @@ export default function RegisterForm() {
                                 id="name"
                                 placeholder="Your Name"
                                 className="focus:outline-none focus:ring-2 focus:ring-[#A5C7FF] border border-gray-300 h-14 pl-16 pr-4 w-full rounded-full text-gray-700 placeholder-gray-500 transition-all duration-200 ease-in-out"
-                                aria-label="Your Name"
+                                required
                             />
                         </div>
 
@@ -78,7 +100,7 @@ export default function RegisterForm() {
                                 id="email"
                                 placeholder="Your email"
                                 className="focus:outline-none focus:ring-2 focus:ring-[#A5C7FF] border border-gray-300 h-14 pl-16 pr-4 w-full rounded-full text-gray-700 placeholder-gray-500 transition-all duration-200 ease-in-out"
-                                aria-label="Email address"
+                                required
                             />
                         </div>
 
@@ -100,7 +122,7 @@ export default function RegisterForm() {
                                 id="password"
                                 placeholder="Create password"
                                 className="focus:outline-none focus:ring-2 focus:ring-[#A5C7FF] border border-gray-300 h-14 pl-16 pr-4 w-full rounded-full text-gray-700 placeholder-gray-500 transition-all duration-200 ease-in-out"
-                                aria-label="Create password"
+                                required
                             />
                         </div>
 
@@ -123,7 +145,7 @@ export default function RegisterForm() {
                                 id="confirmPassword"
                                 placeholder="Confirm password"
                                 className="focus:outline-none focus:ring-2 focus:ring-[#A5C7FF] border border-gray-300 h-14 pl-16 pr-4 w-full rounded-full text-gray-700 placeholder-gray-500 transition-all duration-200 ease-in-out"
-                                aria-label="Confirm password"
+                                required
                             />
                         </div>
 
@@ -131,7 +153,7 @@ export default function RegisterForm() {
                             type="submit"
                             className="bg-[#A5C7FF] w-full py-3 text-xl font-bold text-white rounded-full mt-4 mb-6 hover:bg-[#8bb4ed] transition-colors duration-200 ease-in-out shadow-md"
                         >
-                            Register
+                            {loading ? "Registering..." : "Register"}
                         </button>
                         <p className="text-center text-gray-600 text-sm">
                             Already have an account?{" "}

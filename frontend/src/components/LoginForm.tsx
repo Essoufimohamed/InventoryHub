@@ -1,15 +1,42 @@
 import { UserRound, Lock } from "lucide-react";
 import logo from "../assets/logo (2).jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+
+import toast from "react-hot-toast";
 
 export default function LoginForm() {
+    const { login, user } = useContext(AuthContext);
     const [loginData, setLoginData] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
+
     function handlSubmitForm(e) {
         e.preventDefault();
-        console.log("submit form", loginData);
-        navigate("/");
+        setLoading(true);
+
+        try {
+            const userLogin = login(loginData.email, loginData.password);
+            if (userLogin) {
+                toast.success("Logged in successfully!");
+
+                // console.log(user);
+
+                navigate("/");
+            } else {
+                toast.error("Invalid email or password");
+            }
+        } catch (error) {
+            toast.error("Login failed. Try again.");
+        } finally {
+            setLoading(false);
+        }
+
+        console.log(user);
+
+        // navigate("/");
     }
     return (
         <>
@@ -72,7 +99,7 @@ export default function LoginForm() {
                             type="submit"
                             className="bg-[#A5C7FF] w-full py-3 text-xl font-bold text-white rounded-full mt-4 mb-6 hover:bg-[#8bb4ed] transition-colors duration-200 ease-in-out shadow-md"
                         >
-                            Login
+                            {loading ? "Logging in..." : "Login"}
                         </button>
                         <p className="text-center text-gray-600 text-sm">
                             Don't have an account yet?{" "}
