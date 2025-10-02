@@ -8,12 +8,15 @@ import DashboardCategory from "../pages/DashboardCategory";
 import DashboardSuppliers from "../pages/DashboardSuppliers";
 import DashboardStuff from "../pages/DashboardStaff";
 import Header from "../components/Header";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, User, Settings, LogOut } from "lucide-react";
 import ProfilePage from "../pages/ProfilePage";
+import { AuthContext } from "../context/AuthContext";
 
 export default function layout() {
+    const { user } = useContext(AuthContext);
+
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -64,9 +67,11 @@ export default function layout() {
                                 alt="user avatar"
                             />
                             <div>
-                                <strong className="block">John Doe</strong>
+                                <strong className="block">
+                                    {user?.name || "John Doe"}
+                                </strong>
                                 <p className="text-gray-500 text-sm flex items-center gap-1">
-                                    Admin <ChevronDown size={16} />
+                                    {user?.role} <ChevronDown size={16} />
                                 </p>
                             </div>
                         </div>
