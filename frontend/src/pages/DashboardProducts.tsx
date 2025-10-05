@@ -4,6 +4,7 @@ import FilterProduct from "../components/FilterProduct";
 import ProductTable from "../components/productTable";
 import SectionsTitle from "../components/SectionsTitle";
 import AddProductForm from "../components/AddProductForm";
+import { ProductProvider } from "../context/ProductContext";
 
 export default function DashboardProducts() {
     const [openFormAdd, setOpenFormAdd] = useState(false);
@@ -13,13 +14,15 @@ export default function DashboardProducts() {
     }
     return (
         <>
-            <SectionsTitle title={"Products Management"} />
-            <div className="flex justify-end pr-4 mb-4">
-                <Button onClick={handleFormAdd} />
-            </div>
-            {openFormAdd && <AddProductForm onClose={handleFormAdd} />}
-            <FilterProduct />
-            <ProductTable />
+            <ProductProvider>
+                <SectionsTitle title={"Products Management"} />
+                <div className="flex justify-end pr-4 mb-4">
+                    <Button onClick={handleFormAdd} />
+                </div>
+                {openFormAdd && <AddProductForm onClose={handleFormAdd} />}
+                <FilterProduct />
+                <ProductTable />
+            </ProductProvider>
         </>
     );
 }
