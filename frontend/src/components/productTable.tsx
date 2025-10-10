@@ -1,11 +1,10 @@
 import { Trash2, Edit } from "lucide-react";
-import placeholderImg from "../assets/placeholderProduct.png";
 import { useContext, useEffect, useState } from "react";
-import api from "../utils/api";
 import { ProductContext } from "../context/ProductContext";
-import type AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditeProductForm";
 import DeleteModal from "./DeleteModal";
+import placeholderImg from "../assets/placeholderProduct.png";
+
 export default function ProductTable() {
     // const [products, setProducts] = useState([]);
     const { loading, filtered, deleteProduct } = useContext(ProductContext);

@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import api from "../utils/api";
 import toast from "react-hot-toast";
 
-export const ProductContext = createContext({});
+export const ProductContext = createContext();
 
 // export const useProducts = () => useContext(ProductContext);
 
