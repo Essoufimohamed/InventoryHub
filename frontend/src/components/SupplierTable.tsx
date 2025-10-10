@@ -26,9 +26,9 @@ export default function SupplierTable({ suppliers, onDelete, onEdit }) {
                 <tbody>
                     {suppliers.length > 0 ? (
                         suppliers.map((supplier) => (
-                            <tr key={supplier.id} className="hover:bg-gray-50">
+                            <tr key={supplier._id} className="hover:bg-gray-50">
                                 <td className="px-4 py-2 border border-gray-300">
-                                    {supplier.fullName}
+                                    {supplier.name}
                                 </td>
                                 <td className="px-4 py-2 border border-gray-300">
                                     {supplier.email}
@@ -48,7 +48,7 @@ export default function SupplierTable({ suppliers, onDelete, onEdit }) {
                                     </button>
                                     <button
                                         className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded-md"
-                                        onClick={() => onDelete(supplier.id)}
+                                        onClick={() => onDelete(supplier._id)}
                                     >
                                         Delete
                                     </button>
