@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
 
 export default function EditProductForm({ product, onClose }) {
-    const { updateProduct } = useContext(ProductContext);
+    const { updateProduct, categories } = useContext(ProductContext);
     const [productInfo, setProductInfo] = useState({
         name: product.name || "",
         sku: product.sku || "",
@@ -92,9 +92,14 @@ export default function EditProductForm({ product, onClose }) {
                         className="bg-white border border-gray-200 px-3 py-2 rounded-xl focus:border-blue-400 outline-none"
                     >
                         <option value="">Choose category</option>
-                        <option value="category1">Category 1</option>
-                        <option value="category2">Category 2</option>
-                        <option value="category3">Category 3</option>
+                        {categories &&
+                            categories.map((cat) => {
+                                return (
+                                    <option key={cat._id} value={cat._id}>
+                                        {cat.name}
+                                    </option>
+                                );
+                            })}
                     </select>
                     <input
                         value={productInfo.price}

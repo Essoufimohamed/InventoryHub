@@ -11,7 +11,7 @@ export default function AddProductForm({ onClose }) {
         quantity: "",
     });
 
-    const { addProduct } = useContext(ProductContext);
+    const { addProduct, categories } = useContext(ProductContext);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -95,9 +95,17 @@ export default function AddProductForm({ onClose }) {
                         id="category"
                     >
                         <option value="">Choose category</option>
-                        <option value="category1">Category 1</option>
-                        <option value="category2">Category 2</option>
-                        <option value="category3">Category 3</option>
+                        {categories &&
+                            categories.map((cat) => {
+                                return (
+                                    <option key={cat._id} value={cat._id}>
+                                        {cat.name}
+                                    </option>
+                                );
+                            })}
+
+                        {/* <option value="category2">Category 2</option>
+                        <option value="category3">Category 3</option> */}
                     </select>
                     <input
                         value={productInfo.price}

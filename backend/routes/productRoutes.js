@@ -9,9 +9,9 @@ import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", authMiddleware, createProduct);
 router.get("/", getProducts);
-router.delete("/:id", authMiddleware, deleteProduct);
+router.post("/", authMiddleware, createProduct);
 router.put("/:id", authMiddleware, updateProduct);
+router.delete("/:id", authMiddleware, deleteProduct);
 
 export default router;

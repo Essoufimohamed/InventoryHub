@@ -17,6 +17,7 @@ export const addStock = async (req, res) => {
 
         const log = await StockLog.create({
             product: product._id,
+
             action: "add",
             quantity,
             user: req.user._id,

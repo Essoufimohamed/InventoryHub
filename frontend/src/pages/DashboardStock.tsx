@@ -49,7 +49,7 @@ export default function DashboardStock() {
                             setActionType("add");
                             setIsModalOpen(true);
                         }}
-                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl"
+                        className="px-4 py-2 bg-green-500 hover:bg-green-700 text-white rounded-xl"
                     >
                         Add Stock
                     </button>
@@ -58,7 +58,7 @@ export default function DashboardStock() {
                             setActionType("remove");
                             setIsModalOpen(true);
                         }}
-                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl"
+                        className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-xl"
                     >
                         Remove Stock
                     </button>

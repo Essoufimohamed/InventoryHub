@@ -8,12 +8,14 @@ export const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Fetch products once
     useEffect(() => {
         fetchProducts();
+        fetchCategories();
     }, []);
 
     const fetchProducts = async () => {
@@ -22,6 +24,18 @@ export function ProductProvider({ children }) {
             const { data } = await api.get("product");
             setProducts(data);
             setFiltered(data);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            toast.error("Error fetching products");
+        } finally {
+            setLoading(false);
+        }
+    };
+    const fetchCategories = async () => {
+        try {
+            setLoading(true);
+            const { data } = await api.get("categories");
+            setCategories(data);
         } catch (error) {
             console.error("Error fetching products:", error);
             toast.error("Error fetching products");
@@ -76,6 +90,7 @@ export function ProductProvider({ children }) {
         <ProductContext.Provider
             value={{
                 products,
+                categories,
                 filtered,
                 loading,
                 addProduct,

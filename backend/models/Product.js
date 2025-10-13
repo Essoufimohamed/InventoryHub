@@ -6,10 +6,13 @@ const productSchema = new mongoose.Schema(
         sku: { type: String, unique: true },
         description: String,
         category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
-        supplier: { type: mongoose.Schema.Types.ObjectId, ref: "Supplier" },
+        // category: String,
+        // supplier: { type: mongoose.Schema.Types.ObjectId, ref: "Supplier" },
         quantity: { type: Number, default: 0 },
         price: { type: Number, required: true },
         image: String,
+
+        imageName: String,
     },
     { timestamps: true }
 );

@@ -2,8 +2,16 @@ import Product from "../models/Product.js";
 
 export const createProduct = async (req, res) => {
     try {
-        const { name, sku, description, category, supplier, quantity, price } =
-            req.body;
+        const {
+            name,
+            sku,
+            description,
+            category,
+            supplier,
+            quantity,
+            price,
+            image,
+        } = req.body;
         const product = await Product.create({
             name,
             sku,
@@ -12,6 +20,7 @@ export const createProduct = async (req, res) => {
             supplier,
             quantity,
             price,
+            image,
         });
         res.status(201).json(product);
     } catch (error) {
@@ -21,7 +30,8 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
     try {
-        const products = await Product.find().populate("category supplier");
+        // const products = await Product.find().populate("category supplier");
+        const products = await Product.find().populate("category");
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
