@@ -1,39 +1,55 @@
-export default function HistoryTable() {
+export default function HistoryTable({ logs }) {
     return (
-        <>
-            <div className="overflow-x-auto shadow-md rounded-lg">
-                <table className="min-w-full border border-gray-200 text-sm text-left">
-                    <thead className="bg-[#EBF5FB] ">
-                        <tr>
-                            <th className="px-4 py-2">Product</th>
-                            <th className="px-4 py-2">Action</th>
-                            <th className="px-4 py-2">Qty</th>
-                            <th className="px-4 py-2">Done by</th>
-                            <th className="px-4 py-2">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="border-b border-gray-100 hover:bg-gray-50">
-                            <td className="px-4 py-2">product name</td>
-                            <td className="px-4 py-2 font-bold text-[#53C486]">
-                                Added
+        <div className="overflow-x-auto bg-white rounded-xl shadow">
+            <table className="min-w-full divide-y divide-gray-200 text-sm">
+                <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+                    <tr>
+                        <th className="px-4 py-2 text-left">image</th>
+                        <th className="px-4 py-2 text-left">Product</th>
+                        <th className="px-4 py-2 text-left">Action</th>
+                        <th className="px-4 py-2 text-left">Quantity</th>
+
+                        <th className="px-4 py-2 text-left">Cashier</th>
+                        <th className="px-4 py-2 text-left">Note</th>
+                        <th className="px-4 py-2 text-left">Date</th>
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                    {logs.map((log) => (
+                        <tr key={log._id}>
+                            <td className="px-4 py-2">
+                                <img
+                                    width={40}
+                                    src={log.product?.image}
+                                    alt={log.product?.name}
+                                />
                             </td>
-                            <td className="px-4 py-2">190</td>
-                            <td className="px-4 py-2">Mohamed</td>
-                            <td className="px-4 py-2">25/07/2025</td>
-                        </tr>
-                        <tr className="border-b border-gray-100 hover:bg-gray-50">
-                            <td className="px-4 py-2">product name</td>
-                            <td className="px-4 py-2 font-bold text-[#C45353]">
-                                Removed
+                            <td className="px-4 py-2">{log.product?.name}</td>
+                            <td
+                                className={`px-4 py-2 font-semibold ${
+                                    log.action === "add"
+                                        ? "text-green-600"
+                                        : "text-red-600"
+                                }`}
+                            >
+                                {log.action.toUpperCase()}
                             </td>
-                            <td className="px-4 py-2">20</td>
-                            <td className="px-4 py-2">Yassir</td>
-                            <td className="px-4 py-2">25/07/2025</td>
+                            <td className="px-4 py-2">{log.quantity}</td>
+
+                            <td className="px-4 py-2">{log.user?.name}</td>
+                            <td className="px-4 py-2">{log.note || "-"}</td>
+                            <td className="px-4 py-2 text-gray-500">
+                                {new Date(log.createdAt).toLocaleString()}
+                            </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-        </>
+                    ))}
+                </tbody>
+            </table>
+            {logs.length === 0 && (
+                <p className="text-center text-gray-500 py-4">
+                    No stock logs available.
+                </p>
+            )}
+        </div>
     );
 }
