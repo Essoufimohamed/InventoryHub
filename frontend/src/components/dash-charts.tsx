@@ -10,22 +10,20 @@ import {
     Cell,
 } from "recharts";
 
-const productsPerCategory = [
-    { category: "Electronics", count: 15 },
-    { category: "Furniture", count: 8 },
-    { category: "Clothing", count: 20 },
-    { category: "Food", count: 12 },
-];
-
-const stockDistribution = [
-    { name: "In Stock", value: 80 },
-    { name: "Low Stock", value: 15 },
-    { name: "Out of Stock", value: 5 },
-];
-
 const COLORS = ["#4ade80", "#facc15", "#f87171"];
 
-export default function DashboardCharts() {
+export default function DashboardCharts({
+    stockDistribution,
+    productsPerCategory,
+}) {
+    const stockDistributions = stockDistribution
+        ? [
+              { name: "High", value: stockDistribution.high || 0 },
+              { name: "Medium", value: stockDistribution.medium || 0 },
+              { name: "Low", value: stockDistribution.low || 0 },
+          ]
+        : [];
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             {/* Bar Chart Card */}
@@ -36,7 +34,7 @@ export default function DashboardCharts() {
                 <div className="h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={productsPerCategory}>
-                            <XAxis dataKey="category" />
+                            <XAxis dataKey="name" />
                             <YAxis />
                             <Tooltip />
                             <Bar
@@ -58,7 +56,7 @@ export default function DashboardCharts() {
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
-                                data={stockDistribution}
+                                data={stockDistributions}
                                 cx="50%"
                                 cy="50%"
                                 outerRadius={100}
@@ -66,7 +64,7 @@ export default function DashboardCharts() {
                                 dataKey="value"
                                 label
                             >
-                                {stockDistribution.map((entry, index) => (
+                                {stockDistributions.map((entry, index) => (
                                     <Cell
                                         key={`cell-${index}`}
                                         fill={COLORS[index % COLORS.length]}
