@@ -1,8 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import api from "../utils/api";
 import toast from "react-hot-toast";
 
-export const ProductContext = createContext();
+export const ProductContext = createContext({});
 
 // export const useProducts = () => useContext(ProductContext);
 
@@ -12,16 +12,47 @@ export function ProductProvider({ children }) {
     const [filtered, setFiltered] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // filter metadata
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null); // category._id or null
+    const [searchQuery, setSearchQuery] = useState("");
+
     // Fetch products once
     useEffect(() => {
         fetchProducts();
         fetchCategories();
     }, []);
 
+    //  single function to apply all filters
+    const applyFilters = useCallback(() => {
+        let result = [...products];
+
+        if (selectedCategoryId) {
+            result = result.filter((p) => {
+                // handle case where p.category is an object or an id string
+                const catId =
+                    p.category &&
+                    (p.category._id ? p.category._id : p.category);
+                return catId === selectedCategoryId;
+            });
+        }
+
+        if (searchQuery && searchQuery.trim() !== "") {
+            const q = searchQuery.toLowerCase();
+            result = result.filter((p) => p.name.toLowerCase().includes(q));
+        }
+
+        setFiltered(result);
+    }, [products, selectedCategoryId, searchQuery]);
+
+    // re-run filters when dependencies change
+    useEffect(() => {
+        applyFilters();
+    }, [products, selectedCategoryId, searchQuery, applyFilters]);
+
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get("product");
+            const { data } = await api.get("/product");
             setProducts(data);
             setFiltered(data);
         } catch (error) {
@@ -34,7 +65,7 @@ export function ProductProvider({ children }) {
     const fetchCategories = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get("categories");
+            const { data } = await api.get("/categories");
             setCategories(data);
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -46,10 +77,10 @@ export function ProductProvider({ children }) {
 
     const addProduct = async (newProduct) => {
         try {
-            const { data } = await api.post("product", newProduct);
+            const { data } = await api.post("/product", newProduct);
             setProducts((prev) => [...prev, data]);
             setFiltered((prev) => [...prev, data]);
-            // fetchProducts();
+
             toast.success("The product is added successfuly");
         } catch (error) {
             console.error("Error adding product:", error);
@@ -86,6 +117,16 @@ export function ProductProvider({ children }) {
         );
     };
 
+    // search helper: sets search query which triggers filter via useEffect
+    // const filterByQuery = (query) => {
+    //     setSearchQuery(query);
+    // };
+
+    // category setter: sets category id or null
+    const selectCategory = (categoryId) => {
+        setSelectedCategoryId(categoryId);
+    };
+
     return (
         <ProductContext.Provider
             value={{
@@ -97,6 +138,10 @@ export function ProductProvider({ children }) {
                 filterProducts,
                 updateProduct,
                 deleteProduct,
+                selectedCategoryId,
+                selectCategory,
+                searchQuery,
+                setSearchQuery,
             }}
         >
             {children}

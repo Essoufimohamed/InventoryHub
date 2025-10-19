@@ -1,17 +1,11 @@
 // ProductCategoryFilter.tsx
-import React from "react";
+import { useContext } from "react";
+import { ProductContext } from "../context/ProductContext";
 
-interface ProductCategoryFilterProps {
-    categories: string[];
-    selectedCategory: string | null;
-    onSelectCategory: (category: string | null) => void;
-}
+export default function ProductCategoryFilter() {
+    const { categories, selectedCategoryId, selectCategory } =
+        useContext(ProductContext);
 
-const ProductCategoryFilter: React.FC<ProductCategoryFilterProps> = ({
-    categories,
-    selectedCategory,
-    onSelectCategory,
-}) => {
     const commonClasses =
         "px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200";
     const activeClasses = "bg-blue-500 text-white";
@@ -21,27 +15,27 @@ const ProductCategoryFilter: React.FC<ProductCategoryFilterProps> = ({
         <div className="flex space-x-2 mb-6">
             <button
                 className={`${commonClasses} ${
-                    selectedCategory === null ? activeClasses : inactiveClasses
+                    selectedCategoryId === null
+                        ? activeClasses
+                        : inactiveClasses
                 }`}
-                onClick={() => onSelectCategory(null)}
+                onClick={() => selectCategory(null)}
             >
                 All
             </button>
-            {categories.map((category) => (
+            {categories?.map((category) => (
                 <button
-                    key={category}
+                    key={category._id}
                     className={`${commonClasses} ${
-                        selectedCategory === category
+                        selectedCategoryId === category._id
                             ? activeClasses
                             : inactiveClasses
                     }`}
-                    onClick={() => onSelectCategory(category)}
+                    onClick={() => selectCategory(category._id)}
                 >
-                    {category}
+                    {category.name}
                 </button>
             ))}
         </div>
     );
-};
-
-export default ProductCategoryFilter;
+}

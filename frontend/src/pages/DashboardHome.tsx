@@ -14,12 +14,11 @@ export default function DashboardHome() {
     const getStats = async () => {
         const { data } = await api.get("/stats");
         setDashStats(data);
-        console.log(data);
     };
     useEffect(() => {
         getStats();
     }, []);
-    setInterval(getStats, 30000);
+    // setInterval(getStats, 60000);
 
     return (
         <>

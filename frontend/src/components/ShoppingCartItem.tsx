@@ -1,29 +1,97 @@
-// ShoppingCartItem.tsx
-import React from "react";
+// // ShoppingCartItem.tsx
+// import React from "react";
 
-interface CartItem {
-    id: string;
-    title: string;
-    price: number;
-    quantity: number;
-}
+// interface CartItem {
+//     id: string;
+//     image: string;
+//     title: string;
+//     price: number;
+//     quantity: number;
+// }
 
-interface ShoppingCartItemProps {
-    item: CartItem;
-}
+// interface ShoppingCartItemProps {
+//     item: CartItem;
+// }
 
-const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ item }) => {
+// const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ item }) => {
+//     return (
+//         <div className="flex items-center py-2 border-b border-gray-200 last:border-b-0">
+//             <img src={item?.image} width={"50px"} alt="" />
+//             <div>
+//                 <div className="flex justify-between items-center">
+//                     <p className="text-gray-800 text-sm">
+//                         {item.title}
+//                         <span className="text-gray-500 ml-1">
+//                             x {item.quantity}
+//                         </span>
+//                     </p>
+//                     <p className="text-gray-900 font-medium">
+//                         {(item.price * item.quantity).toFixed(2)} DH
+//                     </p>
+//                 </div>
+//                 <div className="flex justify-end items-center space-x-2 mt-3">
+//                     <input
+//                         type="number"
+//                         name=""
+//                         value={item.quantity}
+//                         className="w-12 border-2 border-gray-700"
+//                     />
+//                     <button
+//                         className="bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm"
+//                         // onClick={(e) => {
+//                         //     e.stopPropagation();
+//                         //     setQuantity((prev) => prev + 1);
+//                         // }}
+//                     >
+//                         +
+//                     </button>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default ShoppingCartItem;
+
+import { useCartStore } from "../stores/useCartStore";
+import { Trash2, Plus, Minus } from "lucide-react";
+
+export default function CartItem({ item }) {
+    const updateQty = useCartStore((s) => s.updateQty);
+    const removeItem = useCartStore((s) => s.removeItem);
     return (
-        <div className="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
-            <p className="text-gray-800 text-sm">
-                {item.title}
-                <span className="text-gray-500 ml-1">x {item.quantity}</span>
-            </p>
-            <p className="text-gray-900 font-medium">
-                {(item.price * item.quantity).toFixed(2)} DH
-            </p>
+        <div className="flex  items-center justify-between gap-2 mb-3 shadow rounded-xl border-gray-100 border px-3 py-2">
+            <img src={item.image} alt="" width={35} height={35} />
+            <div>
+                <div className="font-medium">{item.name}</div>
+                <div className="text-sm text-gray-500">
+                    ${item.price.toFixed(2)} x {item.qty} .
+                    <span className="text-black">
+                        ${(item.price * item.qty).toFixed(2)}
+                    </span>
+                </div>
+            </div>
+            <div className="flex items-center gap-1">
+                <button
+                    onClick={() => updateQty(item._id, item.qty - 1)}
+                    className="border border-gray-500 rounded"
+                >
+                    <Minus width={18} />
+                </button>
+                <div className="px-2">{item.qty}</div>
+                <button
+                    onClick={() => updateQty(item._id, item.qty + 1)}
+                    className=" border border-gray-500 rounded"
+                >
+                    <Plus width={18} />
+                </button>
+                <button
+                    onClick={() => removeItem(item._id)}
+                    className="ml-2 text-red-600 hover:text-red-500 transition-all "
+                >
+                    <Trash2 />
+                </button>
+            </div>
         </div>
     );
-};
-
-export default ShoppingCartItem;
+}
