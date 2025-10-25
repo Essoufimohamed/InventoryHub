@@ -64,14 +64,11 @@ export function ProductProvider({ children }) {
     };
     const fetchCategories = async () => {
         try {
-            setLoading(true);
             const { data } = await api.get("/categories");
             setCategories(data);
         } catch (error) {
             console.error("Error fetching products:", error);
             toast.error("Error fetching products");
-        } finally {
-            setLoading(false);
         }
     };
 
