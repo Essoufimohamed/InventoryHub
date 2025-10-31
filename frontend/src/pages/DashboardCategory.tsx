@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import api from "../utils/api";
 import AddCategoryForm from "../components/AddCategoryForm";
 import CategoriesList from "../components/CategoriesList";
 import SectionsTitle from "../components/SectionsTitle";
-import api from "../utils/api";
 import toast from "react-hot-toast";
 
 export default function DashboardCategory() {

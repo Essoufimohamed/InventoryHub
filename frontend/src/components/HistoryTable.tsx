@@ -15,34 +15,37 @@ export default function HistoryTable({ logs }) {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                    {logs.map((log) => (
-                        <tr key={log._id}>
-                            <td className="px-4 py-2">
-                                <img
-                                    width={40}
-                                    src={log.product?.image}
-                                    alt={log.product?.name}
-                                />
-                            </td>
-                            <td className="px-4 py-2">{log.product?.name}</td>
-                            <td
-                                className={`px-4 py-2 font-semibold ${
-                                    log.action === "add"
-                                        ? "text-green-600"
-                                        : "text-red-600"
-                                }`}
-                            >
-                                {log.action.toUpperCase()}
-                            </td>
-                            <td className="px-4 py-2">{log.quantity}</td>
+                    {logs &&
+                        logs.map((log) => (
+                            <tr key={log._id}>
+                                <td className="px-4 py-2">
+                                    <img
+                                        width={40}
+                                        src={log.product?.image}
+                                        alt={log.product?.name}
+                                    />
+                                </td>
+                                <td className="px-4 py-2">
+                                    {log.product?.name}
+                                </td>
+                                <td
+                                    className={`px-4 py-2 font-semibold ${
+                                        log.action === "add"
+                                            ? "text-green-600"
+                                            : "text-red-600"
+                                    }`}
+                                >
+                                    {log.action.toUpperCase()}
+                                </td>
+                                <td className="px-4 py-2">{log.quantity}</td>
 
-                            <td className="px-4 py-2">{log.user?.name}</td>
-                            <td className="px-4 py-2">{log.note || "-"}</td>
-                            <td className="px-4 py-2 text-gray-500">
-                                {new Date(log.createdAt).toLocaleString()}
-                            </td>
-                        </tr>
-                    ))}
+                                <td className="px-4 py-2">{log.user?.name}</td>
+                                <td className="px-4 py-2">{log.note || "-"}</td>
+                                <td className="px-4 py-2 text-gray-500">
+                                    {new Date(log.createdAt).toLocaleString()}
+                                </td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
             {logs.length === 0 && (

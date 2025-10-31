@@ -20,7 +20,7 @@ export default function DashboardProducts() {
                     <Button onClick={handleFormAdd} />
                 </div>
                 {openFormAdd && <AddProductForm onClose={handleFormAdd} />}
-                <FilterProduct />
+                {/* <FilterProduct /> */}
                 <ProductTable />
             </ProductProvider>
         </>
